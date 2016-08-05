@@ -58,7 +58,8 @@ For HTTP exceptions to be rendered properly with the proper status codes, you sh
 All the exception classes have the below signature
 
 ```php
-\KamranAhmed\Faulty\Exceptions\[ProblemType]Exception($detail, $title = '', $instance = '', $type = '')
+use KamranAhmed\Faulty\Exceptions\[ProblemType]Exception;
+[ProblemType]Exception($detail, $title = '', $instance = '', $type = '')
 ```
 
 Here are some of the provided exception classes
@@ -85,12 +86,16 @@ throw new UnprocessableEntityException('..');
 Also, if you would like to return any response for which the exception class isn't available, you can use the `HttpException` class i.e.
  
 ```php
-throw new \KamranAhmed\Faulty\Exceptions\HttpException($title = '', $status = 500, $detail = '', $instance = '', $type = '');
+use KamranAhmed\Faulty\Exceptions\HttpException;
+
+throw new HttpException($title = '', $status = 500, $detail = '', $instance = '', $type = '');
 ```
 For example
 
 ```php
-throw new \KamranAhmed\Faulty\Exceptions\HttpException('Unsupported Media Type', 415);
+use KamranAhmed\Faulty\Exceptions\HttpException;
+
+throw new HttpException('Unsupported Media Type', 415);
 ```
 
 #### Syntactic Sugar
