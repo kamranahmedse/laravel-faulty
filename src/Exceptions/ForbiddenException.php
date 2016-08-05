@@ -11,8 +11,8 @@ namespace KamranAhmed\Faulty\Exceptions;
  */
 class ForbiddenException extends BaseException
 {
-    /** @var string */
-    protected $status = '403';
+    /** @var int */
+    protected $status = 403;
 
     /** @var string */
     protected $title = 'Forbidden Exception';
