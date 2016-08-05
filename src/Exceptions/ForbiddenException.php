@@ -11,23 +11,35 @@ namespace KamranAhmed\Faulty\Exceptions;
  */
 class ForbiddenException extends BaseException
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $status = '403';
-    protected $title  = 'Forbidden Exception';
+
+    /** @var string */
+    protected $title = 'Forbidden Exception';
+
+    /** @var string */
     protected $detail = '';
+
+    /** @var string */
+    protected $instance;
+
+    /** @var string */
+    protected $type;
 
     /**
      * ForbiddenException constructor.
      *
      * @param string $detail
      * @param string $title
+     * @param string $instance
+     * @param string $type
      */
-    public function __construct($detail, $title = '')
+    public function __construct($detail, $title = '', $instance = '', $type = '')
     {
-        $this->detail = $detail ?: $this->detail;
-        $this->title  = $title ?: $this->title;
+        $this->detail   = $detail ?: $this->detail;
+        $this->title    = $title ?: $this->title;
+        $this->instance = $instance;
+        $this->type     = $type;
 
         parent::__construct($this->detail);
     }

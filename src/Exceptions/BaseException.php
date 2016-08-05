@@ -17,25 +17,20 @@ use Exception;
  */
 abstract class BaseException extends Exception
 {
-    /**
-     * @var string
-     */
-    protected $id;
-
-    /**
-     * @var string
-     */
+    /** @var int */
     protected $status;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $title;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $detail;
+
+    /** @var string */
+    protected $type;
+
+    /** @var string */
+    protected $instance;
 
     /**
      * @param string $message
@@ -68,11 +63,14 @@ abstract class BaseException extends Exception
      */
     public function toArray()
     {
-        return [
-            'status' => $this->status,
-            'title'  => $this->title,
-            'detail' => $this->detail,
-            'type'   => !empty($this->type) ? $this->type : "https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html",
+        $error = [
+            'status'   => $this->status,
+            'title'    => $this->title,
+            'detail'   => $this->detail,
+            'type'     => !empty($this->type) ? $this->type : "https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html",
+            'instance' => $this->instance,
         ];
+
+        return array_filter($error);
     }
 }

@@ -11,12 +11,20 @@ namespace KamranAhmed\Faulty\Exceptions;
  */
 class HttpException extends BaseException
 {
-    /**
-     * @var string
-     */
+    /** @var int */
     protected $status = 500;
-    protected $title  = 'Problem Occured';
-    protected $detail = "An error occured and the process couldn't be processed";
+
+    /** @var string */
+    protected $title = 'Problem Occurred';
+
+    /** @var string */
+    protected $detail = "An error occurred and the process couldn't be processed";
+
+    /** @var string */
+    protected $instance;
+
+    /** @var string */
+    protected $type;
 
     /**
      * BadRequestException constructor.
@@ -24,12 +32,16 @@ class HttpException extends BaseException
      * @param string  $title
      * @param integer $status
      * @param string  $detail
+     * @param string  $instance
+     * @param string  $type
      */
-    public function __construct($title = '', $status = 500, $detail = '')
+    public function __construct($title = '', $status = 500, $detail = '', $instance = '', $type = '')
     {
-        $this->title  = $title ?: $this->title;
-        $this->status = $status;
-        $this->detail = $detail ?: $this->detail;
+        $this->title    = $title ?: $this->title;
+        $this->status   = $status;
+        $this->detail   = $detail ?: $this->detail;
+        $this->type     = $type;
+        $this->instance = $instance;
 
         parent::__construct($this->detail);
     }
