@@ -32,6 +32,9 @@ abstract class BaseException extends Exception
     /** @var string */
     protected $instance;
 
+    /** @var array */
+    protected $additionalDetail;
+
     /**
      * @param string $message
      *
@@ -149,11 +152,28 @@ abstract class BaseException extends Exception
     }
 
     /**
+     * @param array $additionalDetail
+     *
+     * @return $this
+     * @throws \KamranAhmed\Faulty\Exceptions\InternalErrorException
+     */
+    public function setAdditional($additionalDetail)
+    {
+        if (!is_array($additionalDetail)) {
+            throw new InternalErrorException('Additional detail must be array');
+        }
+
+        $this->additionalDetail = $additionalDetail;
+
+        return $this;
+    }
+
+    /**
      * Fails with the current exception object
      *
      * @throws \KamranAhmed\Faulty\Exceptions\BaseException
      */
-    public function fail()
+    public function toss()
     {
         throw $this;
     }
@@ -172,6 +192,8 @@ abstract class BaseException extends Exception
             'type'     => $this->type ?: 'https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html',
             'instance' => $this->instance,
         ];
+
+        $error = array_merge($error, $this->additionalDetail ?: []);
 
         return array_filter($error);
     }

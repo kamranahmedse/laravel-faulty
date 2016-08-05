@@ -37,6 +37,12 @@ Make your exception handler i.e. `App\Exceptions\Handler` that can be found at `
  
  And that's it. You are all set to use Faulty.
  
+ ## Configuration
+ Faulty relies on the following environment configurations
+ 
+ - `APP_DEBUG` : If `true`, exceptions will be rendered with whoops, if false JSON will be returned. **Defaults to `false`**
+ - `APP_DEBUG_TRACE` : If true, stack trace will be included in the application errors. **Defaults to `true`**
+ 
  ## Usage
  
  For HTTP exceptions to be rendered properly with the proper status codes, you should use the exception classes provided by faulty i.e. the ones available in `Faulty\Exceptions` namespace or use the relevant ones provided by the Symfony's HTTP component i.e. the ones available under `Symfony\Component\HttpKernel\Exception`
@@ -92,7 +98,18 @@ $occurence = route('account.error', ['account_id' => 'A837332A', 'log_id' => 34]
     ->setInstance($occurence)
     ->toss();
 ```
+Also, if you would like to send additional data in response, call the method `setAdditional([])` on the error object while passing the additional detail i.e.
 
+```php
+(new ForbiddenException("Your account doesn't have the balance of 50 USD"))
+    ->setTitle('Balance too low)
+    ->setAdditional([
+        'current_balance' => 40,
+        'required_balance' => 50,
+        'item_detail' => $itemArray
+    ])
+    ->toss();
+```
 
 ## Contributing
 Feel free to fork, enhance, create PR and lock issues.
