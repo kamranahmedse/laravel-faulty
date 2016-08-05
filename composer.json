@@ -1,0 +1,27 @@
+{
+  "name": "kamranahmedse/laravel-faulty",
+  "description": "A minimal package to assist in returning RESTful exceptions in your APIs.",
+  "keywords": [
+    "laravel",
+    "lumen",
+    "exceptions",
+    "exception",
+    "errors",
+    "error",
+    "whoops",
+    "laravel faulty",
+    "api problem"
+  ],
+  "type": "library",
+  "require": {
+    "filp/whoops": "^2.1"
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Kamran Ahmed",
+      "email": "kamranahmed.se@gmail.com"
+    }
+  ],
+  "minimum-stability": "dev"
+}
