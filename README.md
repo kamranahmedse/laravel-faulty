@@ -1,6 +1,8 @@
 # Laravel Faulty - RESTful Exceptions
 
-A Laravel/Lumen package that lets you handle the API problems with ease. All the thrown exceptions HTTP or non-HTTP are properly rendered as JSON.
+> Automatically turns your thrown exceptions (HTTP/non-HTTP) to the JSON response while conforming to API problem specification.
+
+A Laravel/Lumen package that lets you handle the API problems with ease.
 
 Faulty provides a straightforward implementation of [IETF Problem Specification](https://tools.ietf.org/html/draft-nottingham-http-problem-07) and turns your exceptions to be returned in the below format with the content type of `application/problem+json`
  
@@ -20,43 +22,50 @@ Where
 - `detail` is human readable explanation specific to problem
 - `instance` is the absolute URI that identifies the specific occurrence of the problem
 
-> Faulty automatically turns your thrown exceptions to the specified response.  
-
 ## Installation
 
 Run the below command
+
 ```
 composer require kamranahmedse/laravel-faulty
 ```
 
 Make your exception handler i.e. `App\Exceptions\Handler` that can be found at `app\Exceptions\Handler.php` extend from the Faulty's handler i.e.
  
- ```
- \KamranAhmed\Faulty\Handler
- ```
+```php
+
+use KamranAhmed\Faulty\Handler as FaultyHandler;
+
+class Handler extends FaultyHandler {
+   // ...
+}
+```
  
- And that's it. You are all set to use Faulty.
+And that's it. You are all set to use Faulty.
  
- ## Configuration
- Faulty relies on the following environment configurations
+##Configuration
+Faulty relies on the following environment configurations
+
+- `APP_DEBUG` : If `true`, exceptions will be rendered with whoops, if false JSON will be returned. **Defaults to `false`**
+- `APP_DEBUG_TRACE` : If true, stack trace will be included in the application errors. **Defaults to `true`**
  
- - `APP_DEBUG` : If `true`, exceptions will be rendered with whoops, if false JSON will be returned. **Defaults to `false`**
- - `APP_DEBUG_TRACE` : If true, stack trace will be included in the application errors. **Defaults to `true`**
+## Usage
  
- ## Usage
+For HTTP exceptions to be rendered properly with the proper status codes, you should use the exception classes provided by faulty i.e. the ones available in `Faulty\Exceptions` namespace or use the relevant ones provided by the Symfony's HTTP component i.e. the ones available under `Symfony\Component\HttpKernel\Exception`
  
- For HTTP exceptions to be rendered properly with the proper status codes, you should use the exception classes provided by faulty i.e. the ones available in `Faulty\Exceptions` namespace or use the relevant ones provided by the Symfony's HTTP component i.e. the ones available under `Symfony\Component\HttpKernel\Exception`
- 
- #### Throwing Exceptions
- All the exception classes have the below signature
- ```php
-\KamranAhmed\Faulty\Exceptions\[ProblemType]Exception($detail, $title = '', $instance = '', $type = '')
- ```
+####Throwing Exceptions
+
+All the exception classes have the below signature
+
+```php
+use KamranAhmed\Faulty\Exceptions\[ProblemType]Exception;
+[ProblemType]Exception($detail, $title = '', $instance = '', $type = '')
+```
+
 Here are some of the provided exception classes
  
 ```php
 // Include the exception classes from the given namespace
-
 
 throw new BadRequestException('Invalid request data');
 throw new ConflictException('Same request is already pending');
@@ -77,12 +86,16 @@ throw new UnprocessableEntityException('..');
 Also, if you would like to return any response for which the exception class isn't available, you can use the `HttpException` class i.e.
  
 ```php
-throw new \KamranAhmed\Faulty\Exceptions\HttpException($title = '', $status = 500, $detail = '', $instance = '', $type = '');
+use KamranAhmed\Faulty\Exceptions\HttpException;
+
+throw new HttpException($title = '', $status = 500, $detail = '', $instance = '', $type = '');
 ```
 For example
 
 ```php
-throw new \KamranAhmed\Faulty\Exceptions\HttpException('Unsupported Media Type', 415);
+use KamranAhmed\Faulty\Exceptions\HttpException;
+
+throw new HttpException('Unsupported Media Type', 415);
 ```
 
 #### Syntactic Sugar
@@ -98,6 +111,7 @@ $occurence = route('account.error', ['account_id' => 'A837332A', 'log_id' => 34]
     ->setInstance($occurence)
     ->toss();
 ```
+
 Also, if you would like to send additional data in response, call the method `setAdditional([])` on the error object while passing the additional detail i.e.
 
 ```php
