@@ -13,6 +13,11 @@
     "api problem"
   ],
   "type": "library",
+  "autoload": {
+    "psr-4": {
+      "KamranAhmed\\Faulty\\": "src/"
+    }
+  },
   "require": {
     "filp/whoops": "^2.1"
   },
