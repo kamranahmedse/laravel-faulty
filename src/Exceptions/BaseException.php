@@ -149,6 +149,16 @@ abstract class BaseException extends Exception
     }
 
     /**
+     * Fail with the current exception object
+     *
+     * @throws \KamranAhmed\Faulty\Exceptions\BaseException
+     */
+    public function toss()
+    {
+        throw $this;
+    }
+
+    /**
      * Return the Exception as an array
      *
      * @return array
