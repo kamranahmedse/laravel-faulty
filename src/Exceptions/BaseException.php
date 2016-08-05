@@ -149,11 +149,11 @@ abstract class BaseException extends Exception
     }
 
     /**
-     * Fail with the current exception object
+     * Fails with the current exception object
      *
      * @throws \KamranAhmed\Faulty\Exceptions\BaseException
      */
-    public function toss()
+    public function fail()
     {
         throw $this;
     }
