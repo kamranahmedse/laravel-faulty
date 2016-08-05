@@ -53,7 +53,7 @@ Faulty relies on the following environment configurations
  
 For HTTP exceptions to be rendered properly with the proper status codes, you should use the exception classes provided by faulty i.e. the ones available in `Faulty\Exceptions` namespace or use the relevant ones provided by the Symfony's HTTP component i.e. the ones available under `Symfony\Component\HttpKernel\Exception`
  
-####Throwing Exceptions
+###Throwing Exceptions
 
 All the exception classes have the below signature
 
@@ -90,15 +90,8 @@ use KamranAhmed\Faulty\Exceptions\HttpException;
 
 throw new HttpException($title = '', $status = 500, $detail = '', $instance = '', $type = '');
 ```
-For example
 
-```php
-use KamranAhmed\Faulty\Exceptions\HttpException;
-
-throw new HttpException('Unsupported Media Type', 415);
-```
-
-#### Syntactic Sugar
+### Syntactic Sugar
 Also, for any of the exception classes above, you can use the below syntax as well.
  
 ```php
