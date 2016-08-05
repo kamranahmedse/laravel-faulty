@@ -1,8 +1,8 @@
 # Laravel Faulty - RESTful Exceptions
 
-> Faulty automatically turns your thrown exceptions to the JSON response while conforming to API problem specification.
+> Automatically turns your thrown exceptions (HTTP/non-HTTP) to the JSON response while conforming to API problem specification.
 
-A Laravel/Lumen package that lets you handle the API problems with ease. All the thrown exceptions HTTP or non-HTTP are properly rendered as JSON.
+A Laravel/Lumen package that lets you handle the API problems with ease.
 
 Faulty provides a straightforward implementation of [IETF Problem Specification](https://tools.ietf.org/html/draft-nottingham-http-problem-07) and turns your exceptions to be returned in the below format with the content type of `application/problem+json`
  
