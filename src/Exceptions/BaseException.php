@@ -57,6 +57,98 @@ abstract class BaseException extends Exception
     }
 
     /**
+     * @param $status
+     *
+     * @return $this
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * @param $title
+     *
+     * @return $this
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDetail()
+    {
+        return $this->detail;
+    }
+
+    /**
+     * @param $detail
+     *
+     * @return $this
+     */
+    public function setDetail($detail)
+    {
+        $this->detail = $detail;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param $type
+     *
+     * @return $this
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getInstance()
+    {
+        return $this->instance;
+    }
+
+    /**
+     * @param $instance
+     *
+     * @return $this
+     */
+    public function setInstance($instance)
+    {
+        $this->instance = $instance;
+
+        return $this;
+    }
+
+    /**
      * Return the Exception as an array
      *
      * @return array
@@ -67,7 +159,7 @@ abstract class BaseException extends Exception
             'status'   => $this->status,
             'title'    => $this->title,
             'detail'   => $this->detail,
-            'type'     => !empty($this->type) ? $this->type : "https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html",
+            'type'     => $this->type ?: 'https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html',
             'instance' => $this->instance,
         ];
 
