@@ -37,7 +37,7 @@ class InternalErrorException extends BaseException
      */
     public function __construct($detail, $title = '', $instance = '', $type = '')
     {
-        $this->detail   = $detail ?: $this->detail;
+        $this->detail   = $detail ?: $this->title;
         $this->title    = $title ?: $this->title;
         $this->instance = $instance;
         $this->type     = $type;
