@@ -43,7 +43,7 @@ abstract class BaseException extends Exception
     public function __construct($message)
     {
         if (!is_scalar($message)) {
-            throw new InternalErrorException('Exception message should be string');
+            $message = $this->title;
         }
 
         parent::__construct($message);
