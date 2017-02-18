@@ -7,8 +7,10 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Validation\ValidationException;
 use KamranAhmed\Faulty\Exceptions\BaseException;
+use KamranAhmed\Faulty\Exceptions\NotFoundException;
 use Laravel\Lumen\Exceptions\Handler as LumenExceptionHandler;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 use Whoops\Handler\PrettyPageHandler;
 use Whoops\Run;
 
@@ -75,7 +77,7 @@ class Handler extends LumenExceptionHandler
      * the array with status and render. If there is any other e.g. fatal or anything
      *
      * @param            $request
-     * @param Exception $e
+     * @param Exception  $e
      *
      * @return Response|\Symfony\Component\HttpFoundation\Response
      */
@@ -86,10 +88,19 @@ class Handler extends LumenExceptionHandler
         if ($e instanceOf BaseException) {
             $data = $e->toArray();
         } else if ($e instanceof HttpException) {
+
+            if ($e instanceof NotFoundException) {
+                $detail = 'Resource not found';
+            } else if ($e instanceof MethodNotAllowedHttpException) {
+                $detail = 'Method not allowed';
+            } else {
+                $detail = $this->generateHttpExceptionMessage($e);
+            }
+
             $data = [
                 'status' => $e->getStatusCode(),
-                'title'  => str_ireplace('HttpException', '', get_class($e)),
-                'detail' => $e->getMessage(),
+                'title'  => $detail,
+                'detail' => $detail,
             ];
         } else if ($e instanceof ValidationException) {
             parent::render($request, $e);
@@ -125,5 +136,21 @@ class Handler extends LumenExceptionHandler
             'detail' => $e->getMessage(),
             'type'   => 'https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html',
         ];
+    }
+
+    /**
+     * @param \Symfony\Component\HttpKernel\Exception\HttpException $e
+     *
+     * @return string
+     */
+    private function generateHttpExceptionMessage(HttpException $e)
+    {
+        $class = get_class($e);
+        $parts = explode('\\', $class);
+
+        $title = $parts[count($parts) - 1] ?? $class;
+        $title = str_replace('HttpException', '', $title);
+
+        return $title;
     }
 }
